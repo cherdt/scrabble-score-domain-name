@@ -8,11 +8,27 @@ char chr[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p',
 int val[26] = {1,3,3,2,1,4,2,4,1,8,5,2,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
 int i;
 
+// Gets the count of a-z characters in the string
+int get_length(char* str) {
+    int count = 0;
+    char** temp = &str;
+    while (*(str)) {
+        if (*(str) >= 'a' && *(str) <= 'z') {
+            count++;
+        }
+        str++;
+    }
+    str = *temp;
+    return count;
+}
+
 int get_score(char* str) {
     int total = 0;
-    int i = 0;
     while (*(str)) {
-        total += val[*(str) - 97];
+        // lowercase a-z only
+        if (*(str) >= 'a' && *(str) <= 'z') {
+            total += val[*(str) - 97];
+        }
         str++;
     }
     return total;
@@ -35,15 +51,17 @@ int remove_tld(char* str) {
 
 int main() {
     int score;
+    int length;
     size_t str_length;
     scanf("%s", str);
     remove_tld(str);
-    str_length = strlen(str);
-    printf("You entered %s\n", str);
+    length = get_length(str);
+    //printf("String length: %d\n", length);
+    //printf("You entered %s\n", str);
     score = get_score(str);
-    printf("The score is %d\n", score);
-    printf("The per-letter score is %d\n", score/(int) str_length); 
-    printf("The per-letter score is %f\n", score/(float) str_length); 
-    printf("%d	%f\n", score, score/(float) str_length);
+    //printf("The score is %d\n", score);
+    //printf("The per-letter score is %d\n", score/(int) length); 
+    //printf("The per-letter score is %f\n", score/(float) length); 
+    printf("%s	%d	%f\n", str, score, score/(float) length);
     return 0;
 }
