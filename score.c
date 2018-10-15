@@ -2,7 +2,7 @@
 #include <math.h>
 #include <string.h>
 
-char str[255];
+char* str;
 
 char chr[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 int val[26] = {1,3,3,2,1,4,2,4,1,8,5,2,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
@@ -49,11 +49,17 @@ int remove_tld(char* str) {
     return i;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     int score;
     int length;
+    char input_str[255];
     size_t str_length;
-    scanf("%s", str);
+    if (argc < 2 ) {
+        scanf("%s", input_str);
+        str = input_str;
+    } else {
+        str = argv[1];
+    }
     remove_tld(str);
     length = get_length(str);
     //printf("String length: %d\n", length);
@@ -62,6 +68,6 @@ int main() {
     //printf("The score is %d\n", score);
     //printf("The per-letter score is %d\n", score/(int) length); 
     //printf("The per-letter score is %f\n", score/(float) length); 
-    printf("%s	%d	%f\n", str, score, score/(float) length);
+    printf("%s\t%d\t%d\t%f\n", str, length, score, score/(float) length);
     return 0;
 }
