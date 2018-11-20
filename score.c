@@ -75,6 +75,8 @@ int main(int argc, char *argv[]) {
     //printf("The score is %d\n", score);
     //printf("The per-letter score is %d\n", score/(int) length); 
     //printf("The per-letter score is %f\n", score/(float) length); 
-    printf("%s\t%d\t%d\t%f\n", str, length, score, score/(float) length);
+    if (str[0] != '#') {
+        printf("%s\t%d\t%d\t%f\n", str, length, score, score/(float) length);
+    }
     return 0;
 }
