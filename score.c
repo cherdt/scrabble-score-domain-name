@@ -9,11 +9,12 @@ int val[26] = {1,3,3,2,1,4,2,4,1,8,5,2,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
 int i;
 
 // Gets the count of a-z characters in the string
+// and - an 0-9
 int get_length(char* str) {
     int count = 0;
     char** temp = &str;
     while (*(str)) {
-        if (*(str) >= 'a' && *(str) <= 'z') {
+        if ((*(str) >= 'a' && *(str) <= 'z') || (*(str) >= '-' && *(str) <= '9')) {
             count++;
         }
         str++;
@@ -29,6 +30,10 @@ int get_score(char* str) {
         if (*(str) >= 'a' && *(str) <= 'z') {
             total += val[*(str) - 97];
         }
+        // 0-9 and hyphens, count as 1?
+        if (*(str) >= '-' && *(str) <= '9') {
+            total += 1;
+        }
         str++;
     }
     return total;
@@ -40,7 +45,9 @@ int get_score(char* str) {
 int remove_tld(char* str) {
     size_t str_length = strlen(str);
     int i;
-    for (i = str_length; i >= 0; --i) {
+    // start 3 from the end, this will skip over country codes
+    // like .uk and also catch .com/.net/.org in fewer loops
+    for (i = str_length - 4; i >= 0; --i) {
         if (str[i] == '.') {
             str[i] = '\0';
             break;
