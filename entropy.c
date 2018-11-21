@@ -48,10 +48,11 @@ int populate_entropy_row(int row) {
 
 int print_row(int row) {
     int i;
+    printf("{");
     for (i = 0; i < 40; i++) {
         printf("%.1f, ", entropy[row][i]);
     }
-    printf("\n");
+    printf("}\n");
     return 0;
 }
 
@@ -75,7 +76,8 @@ int main(int argc, char *argv[]) {
             c = getchar();
             continue;
         }
-        printf("%i\n", populate_table(p, c));
+        //printf("%i\n", populate_table(p, c));
+        populate_table(p, c);
         p = c;
         c = getchar();
     }
