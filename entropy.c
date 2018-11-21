@@ -38,6 +38,8 @@ int populate_entropy_row(int row) {
          val = tab[row][j];
          if (sum > 0.0) {
              entropy[row][j] = 1.0 - (val/sum);
+             // let's square it
+             entropy[row][j] *= entropy[row][j];
          }
          else {
              entropy[row][j] = 1.0;
