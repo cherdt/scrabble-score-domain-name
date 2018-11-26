@@ -37,6 +37,10 @@ ggplot(df, aes(x=SPL)) + geom_histogram(colour="black",fill="#6677BB", binwidth=
 # We can chop it off with xlim(0,100) but we lose data for 151 domains (0.015%)
 ggplot(df, aes(x=SCORE)) + geom_histogram(colour="black",fill="#6677BB", binwidth=1, boundary=0) + labs(title="Scrabble Scores, Majestic Million") + labs(x="Scrabble Scores") + xlim(0,100) + scale_y_continuous(labels = scales::comma)
 
+# We can plot both the DGA domains and the Majestic Million together
+# Note that since DGA is numeric, ggplot wants to treat it like a continuous variable....
+ggplot(df,aes(x=SCORE,y=stat(density),group=ifelse(DGA==1,"DGA","CONTROL"),fill=ifelse(DGA==1,"DGA","CONTROL")))+ geom_histogram(position="dodge",binwidth=25.0) + geom_density(stat="density", alpha=I(0.1), fill="black")
+
 # Logistic regression
 # First, import a set of all domains (Majestic Million and DGAs), sorted randomly.
 # There must be a column to identify DGAs (0 or 1)

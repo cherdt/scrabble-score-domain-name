@@ -74,6 +74,10 @@ int get_pos(c) {
     return 0;
 }
 
+int is_letter(c) {
+    return (c >= 'a' && c<= 'z');
+}
+
 float div_ints(int n, int m) {
     float f1 = n;
     float f2 = m;
@@ -112,9 +116,11 @@ float get_entropy_score(int current, int previous) {
 
 int main(int argc, char *argv[]) {
     int c;
+    int i;
     int p = '^';
+    int alpha_counts[26] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-    printf("DOMAIN\tSCORE\tLENGTH\tSPL\tENTROPY\tEPL\n");
+    printf("DOMAIN\tSCORE\tLENGTH\tSPL\tENTROPY\tEPL\tJ\tQ\tX\tZ\n");
 
     length = 0;
     score = 0;
@@ -133,12 +139,15 @@ int main(int argc, char *argv[]) {
 
         /* if we're at the end of a line, print summary data */
         if (c == '\n') {
-            printf("\t%i\t%i\t%.1f\t%.1f\t%.2f", score, length, div_ints(score, length - dots), entropy_score, entropy_score/length);
+            printf("\t%i\t%i\t%.1f\t%.1f\t%.3f\t%i\t%i\t%i\t%i", score, length, div_ints(score, length - dots), entropy_score, entropy_score/length, alpha_counts['j'-'a'], alpha_counts['q'-'a'], alpha_counts['x'-'a'], alpha_counts['z'-'a']);
             p = '^';
             length = 0;
             score = 0;
             entropy_score = 0;
             dots = 0;
+            for (i = 0; i <= 'z' - 'a'; i++) {
+                alpha_counts[i] = 0;
+            }
         }
 
         /* otherwise, continue processing string */
@@ -147,6 +156,9 @@ int main(int argc, char *argv[]) {
             score += get_score(c);
             entropy_score += get_entropy_score(p,c);
             dots += get_dots(c);
+            if (is_letter(c)) {
+                alpha_counts[c - 'a']++;
+            }
             p = c;
         }
         printf("%c", c);
