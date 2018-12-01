@@ -88,6 +88,9 @@ library(ggbiplot)
 ggbiplot(pc)
 
 # Well, that plot is useless. This one is slightly more interesting
+# Overplotting is the main issue, we're losing data in the visualization
 ggbiplot(pc, groups=df$DGA, ellipse=TRUE, varname.size = 5)
 
-
+# This is a nice graph, it would be better if R understood out-of-the-box
+# that a column that contains only 1's and 0's is not continuous data
+ggplot(df,aes(x=SCORE,y=stat(density),group=ifelse(DGA==1,"DGA","CONTROL"),fill=ifelse(DGA==1,"DGA","CONTROL")))+ geom_histogram(position="dodge",binwidth=25.0) + geom_density(stat="density", alpha=I(0.1), fill="black")
