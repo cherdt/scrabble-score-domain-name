@@ -2,11 +2,14 @@
 
 An exploration of Domain-Generating Algorithm (DGA) domains. I used the Majestic Million as a control.
 
-Don't use this code. It's probably terrible. Why would you even look at it. I put it here so I can look at it.
+This code was used in the analysis presented in [Identifying DGA Domains Using Scrabble Scores: A Naive Approach](http://osric.com/chris/accidental-developer/2018/12/identifying-dga-domains-using-scrabble-scores-a-naive-approach/)
+
+## How to compile
+`make`
 
 ## How to use it
-`echo example.com | ./readline`
+`echo example.com | ./score`
 
 or
 
-`./readline <dga_list`
+`./score <dga_list`
