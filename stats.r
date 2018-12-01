@@ -41,6 +41,9 @@ ggplot(df, aes(x=SCORE)) + geom_histogram(colour="black",fill="#6677BB", binwidt
 # Note that since DGA is numeric, ggplot wants to treat it like a continuous variable....
 ggplot(df,aes(x=SCORE,y=stat(density),group=ifelse(DGA==1,"DGA","CONTROL"),fill=ifelse(DGA==1,"DGA","CONTROL")))+ geom_histogram(position="dodge",binwidth=25.0) + geom_density(stat="density", alpha=I(0.1), fill="black")
 
+# Modifying the input data to label each row "DGA" or "MajesticMillion" helps
+ggplot(combined,aes(x=SCORE,y=stat(density),group=TYPE,fill=TYPE))+ geom_histogram(position="dodge",binwidth=25.0) + geom_density(stat="density", alpha=I(0.1), fill="black")
+
 # Logistic regression
 # First, import a set of all domains (Majestic Million and DGAs), sorted randomly.
 # There must be a column to identify DGAs (0 or 1)
@@ -87,10 +90,10 @@ install_github("vqv/ggbiplot")
 library(ggbiplot)
 ggbiplot(pc)
 
+# If you want a biplot that is both better and worse, try this
+biplot(pc)
+
 # Well, that plot is useless. This one is slightly more interesting
 # Overplotting is the main issue, we're losing data in the visualization
 ggbiplot(pc, groups=df$DGA, ellipse=TRUE, varname.size = 5)
 
-# This is a nice graph, it would be better if R understood out-of-the-box
-# that a column that contains only 1's and 0's is not continuous data
-ggplot(df,aes(x=SCORE,y=stat(density),group=ifelse(DGA==1,"DGA","CONTROL"),fill=ifelse(DGA==1,"DGA","CONTROL")))+ geom_histogram(position="dodge",binwidth=25.0) + geom_density(stat="density", alpha=I(0.1), fill="black")
